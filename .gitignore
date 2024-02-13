@@ -1,0 +1,7 @@
+runs/
+openlane_run/
+abc.history
+__pycache__
+output/
+macro/
+fabrics_nl/
