@@ -54,10 +54,19 @@ After the tiles are hardened as macros, call:
 
 ## Cleanup
 
-To remove intermediate files:
+To remove all intermediate files:
 
 	make clean
 
-To remove the macros:
+To remove all OpenLane 2 output:
+
+	make clean_openlane
+
+To remove the generated fabrics:
+
+	make clean_fabrics
+
+To remove the hardened macros:
 
 	make clean_macros
+
