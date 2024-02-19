@@ -6,8 +6,10 @@
 import os
 import sys
 import time
+import json
 import argparse
 import resource
+from datetime import datetime
 
 from common import TILE_WIDTH, TILE_HEIGHT, SPACING, HALO_SPACING
 
@@ -79,6 +81,8 @@ class TopFlow(SequentialFlow):
 
 def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_TILES_Y=2):
     
+    date_tag = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    
     t_process = time.process_time()
     t_perf_counter = time.perf_counter()
 
@@ -92,24 +96,30 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     OPEN_IN_OPENROAD  = os.getenv('OPEN_IN_OPENROAD')
     NO_CHECKS         = os.getenv('NO_CHECKS')
 
+    omit_steps = [
+        'OpenROAD.STAPostPNR',
+        'KLayout.XOR',
+        'Checker.XOR',
+        'Magic.DRC',
+        'KLayout.DRC',
+        'Checker.MagicDRC',
+        'Checker.KLayoutDRC',
+        'Magic.SpiceExtraction',
+        'Checker.IllegalOverlap',
+        'Netgen.LVS',
+        'Checker.LVS'
+    ]
+    
     if NO_CHECKS:
-        TopFlow.Steps.remove(OpenROAD.STAPostPNR)
-        TopFlow.Steps.remove(KLayout.XOR)
-        TopFlow.Steps.remove(Checker.XOR)
-        TopFlow.Steps.remove(Magic.DRC)
-        TopFlow.Steps.remove(KLayout.DRC)
-        TopFlow.Steps.remove(Checker.MagicDRC)
-        TopFlow.Steps.remove(Checker.KLayoutDRC)
-        TopFlow.Steps.remove(Magic.SpiceExtraction)
-        TopFlow.Steps.remove(Checker.IllegalOverlap)
-        TopFlow.Steps.remove(Netgen.LVS)
-        TopFlow.Steps.remove(Checker.LVS)
+        for step in TopFlow.Steps:
+            for omit_step in omit_steps:
+                if step.id.startswith(omit_step):
+                    TopFlow.Steps.remove(step)
+                    break
 
     verilog_files = [
         fabric_path
     ]
-    
-    # TODO PDN connections?
     
     # Create macro configurations
     macro_names = ['LUT4AB', 'E_IO', 'W_IO', 'N_IO', 'S_IO', 'N_term_single', 'S_term_single']
@@ -192,11 +202,12 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         "DIE_AREA"           : [0, 0, FABRIC_WIDTH, FABRIC_HEIGHT],
         "FP_SIZING"          : "absolute",
 
+        # CTS
+        "CLOCK_PORT": "UserCLK",
+        "CLOCK_PERIOD": 100,
+
         # Macros
         "MACROS": macros,
-        # "PDN_MACRO_CONNECTIONS" = [] TODO
-
-        #"PDN_MACRO_CONNECTIONS": ["Tile_X1Y0_N_term_single VPWR VGND VPWR VGND"],
 
         # Power Distribution Network
         "FP_PDN_MULTILAYER" : True,
@@ -211,12 +222,7 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         # Routing
         "GRT_ALLOW_CONGESTION"  : True,
         "GRT_REPAIR_ANTENNAS"   : False,
-        "RT_MAX_LAYER"          : "met4",
-        
-        "CLOCK_PORT": "",#"UserCLK",
-        "CLOCK_PERIOD": 0,#10,
-        
-        #"MAX_FANOUT_CONSTRAINT": 6,
+        "RT_MAX_LAYER"          : "met4"
     }
 
     os.makedirs(os.path.join('runs/fabric_stitching/', fabric_name), exist_ok=True)
@@ -280,9 +286,9 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
 
     print(resources)
     
-    os.makedirs('measurements/fabric_stitching/', exist_ok=True)
+    os.makedirs(f'measurements/fabric_stitching/{fabric_name}', exist_ok=True)
     
-    with open(f'measurements/fabric_stitching/{fabric_name}.txt', 'w') as f:
+    with open(os.path.join(f'measurements/fabric_stitching/{fabric_name}', f'{date_tag}.txt'), 'w') as f:
         f.write(str(resources))
 
 if __name__ == "__main__":

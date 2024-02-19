@@ -8,6 +8,7 @@ import sys
 import time
 import shutil
 import resource
+from datetime import datetime
 
 import common
 
@@ -196,6 +197,8 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
 
 def main():
 
+    date_tag = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+
     # Get environment variables
     OPEN_IN_KLAYOUT   = os.getenv('OPEN_IN_KLAYOUT')
     OPEN_IN_OPENROAD  = os.getenv('OPEN_IN_OPENROAD')
@@ -266,8 +269,8 @@ def main():
     harden_tile('Tile/', 'LUT4AB',        verilog_files_lut4ab,        common.TILE_WIDTH, common.TILE_HEIGHT)
     harden_tile('Tile/', 'N_term_single', verilog_files_n_term_single, common.TILE_WIDTH, common.TILE_HEIGHT//2)
     harden_tile('Tile/', 'S_term_single', verilog_files_s_term_single, common.TILE_WIDTH, common.TILE_HEIGHT//2)
-    harden_tile('Tile/', 'N_IO', verilog_files_n_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
-    harden_tile('Tile/', 'S_IO', verilog_files_s_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
+    #harden_tile('Tile/', 'N_IO', verilog_files_n_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
+    #harden_tile('Tile/', 'S_IO', verilog_files_s_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
     
     elapsed_time_process = time.process_time() - t_process
     elapsed_time_perf_counter = time.perf_counter() - t_perf_counter
@@ -299,9 +302,9 @@ def main():
 
     print(resources)
     
-    os.makedirs('measurements/harden_tiles/', exist_ok=True)
+    os.makedirs(os.path.join('measurements/harden_tiles/'), exist_ok=True)
 
-    with open(f'measurements/harden_tiles/harden_tiles.txt', 'w') as f:
+    with open(os.path.join('measurements/harden_tiles/', f'{date_tag}.txt'), 'w') as f:
         f.write(str(resources))
 
 if __name__ == "__main__":

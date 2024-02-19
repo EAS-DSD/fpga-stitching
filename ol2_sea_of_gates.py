@@ -9,6 +9,7 @@ import time
 import json
 import argparse
 import resource
+from datetime import datetime
 
 from openlane.flows.classic import Classic
 from openlane.flows.misc import OpenInKLayout
@@ -22,10 +23,12 @@ from openlane.steps import (
     KLayout,
     Odb,
     Netgen,
-    Checker,
+    Checker
 )
 
 def main(tiles_path, fabric_name, output_dir):
+
+    date_tag = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
     t_process = time.process_time()
     t_perf_counter = time.perf_counter()
@@ -40,14 +43,31 @@ def main(tiles_path, fabric_name, output_dir):
     OPEN_IN_OPENROAD  = os.getenv('OPEN_IN_OPENROAD')
     NO_CHECKS         = os.getenv('NO_CHECKS')
 
+    omit_steps = [
+        'OpenROAD.STAPrePNR',
+        'OpenROAD.STAMidPNR',
+        'OpenROAD.STAMidPNR-1',
+        'OpenROAD.STAMidPNR-2',
+        'OpenROAD.STAMidPNR-3',
+        'OpenROAD.STAPostPNR',
+        'KLayout.XOR',
+        'Checker.XOR',
+        'Magic.DRC',
+        'KLayout.DRC',
+        'Checker.MagicDRC',
+        'Checker.KLayoutDRC',
+        'Magic.SpiceExtraction',
+        'Checker.IllegalOverlap',
+        'Netgen.LVS',
+        'Checker.LVS'
+    ]
+    
     if NO_CHECKS:
-        Classic.Steps.remove(OpenROAD.STAPostPNR)
-        Classic.Steps.remove(KLayout.XOR)
-        Classic.Steps.remove(Checker.XOR)
-        Classic.Steps.remove(Magic.DRC)
-        Classic.Steps.remove(KLayout.DRC)
-        Classic.Steps.remove(Checker.MagicDRC)
-        Classic.Steps.remove(Checker.KLayoutDRC) 
+        for step in Classic.Steps:
+            for omit_step in omit_steps:
+                if step.id.startswith(omit_step):
+                    Classic.Steps.remove(step)
+                    break
 
     verilog_files = [
         "custom.v",
@@ -144,9 +164,9 @@ def main(tiles_path, fabric_name, output_dir):
 
     print(resources)
     
-    os.makedirs('measurements/sea_of_gates/', exist_ok=True)
+    os.makedirs(f'measurements/sea_of_gates/{fabric_name}', exist_ok=True)
     
-    with open(f'measurements/sea_of_gates/{fabric_name}.txt', 'w') as f:
+    with open(os.path.join(f'measurements/sea_of_gates/{fabric_name}', f'{date_tag}.txt'), 'w') as f:
         f.write(str(resources))
 
 if __name__ == "__main__":
