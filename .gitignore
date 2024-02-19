@@ -5,3 +5,16 @@ __pycache__
 output/
 macro/
 fabrics_nl/
+
+Tile/N_IO/N_IO.v
+Tile/E_IO/E_IO.v
+Tile/S_IO/S_IO.v
+Tile/W_IO/W_IO.v
+Tile/N_term_single/N_term_single.v
+Tile/S_term_single/S_term_single.v
+Tile/LUT4AB/LUT4AB.v
+
+Tile/*/*_ConfigMem.csv
+Tile/*/*_ConfigMem.v
+Tile/*/*_switch_matrix.csv
+Tile/*/*_switch_matrix.v

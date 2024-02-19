@@ -132,16 +132,15 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
 
         # Sources
         "VERILOG_FILES"        : verilog_files,
-
         "TILE_PATH" : tile_path,
+
+        # CTS
+        "CLOCK_PORT": "UserCLK",
+        "CLOCK_PERIOD": 100,
 
         # Floorplanning
         "DIE_AREA"           : [0, 0, width, height],
         "FP_SIZING"          : "absolute",
-        #"BOTTOM_MARGIN_MULT" : 1,
-        #"TOP_MARGIN_MULT"    : 1,
-        #"LEFT_MARGIN_MULT"   : 6,
-        #"RIGHT_MARGIN_MULT"  : 6,
         
         # Power Distribution Network
         "FP_PDN_MULTILAYER" : False,
@@ -197,6 +196,10 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
 
 def main():
 
+    # Get environment variables
+    OPEN_IN_KLAYOUT   = os.getenv('OPEN_IN_KLAYOUT')
+    OPEN_IN_OPENROAD  = os.getenv('OPEN_IN_OPENROAD')
+
     t_process = time.process_time()
     t_perf_counter = time.perf_counter()
 
@@ -219,6 +222,22 @@ def main():
         'Tile/W_IO/W_IO.v',
         'Tile/W_IO/W_IO_switch_matrix.v',
         'Tile/W_IO/W_IO_ConfigMem.v'
+    ]
+    
+    verilog_files_n_io = verilog_files + [
+        'Tile/N_IO/Config_access.v',
+        'Tile/N_IO/IO_1_bidirectional_frame_config_pass.v',
+        'Tile/N_IO/N_IO.v',
+        'Tile/N_IO/N_IO_switch_matrix.v',
+        'Tile/N_IO/N_IO_ConfigMem.v'
+    ]
+    
+    verilog_files_s_io = verilog_files + [
+        'Tile/S_IO/Config_access.v',
+        'Tile/S_IO/IO_1_bidirectional_frame_config_pass.v',
+        'Tile/S_IO/S_IO.v',
+        'Tile/S_IO/S_IO_switch_matrix.v',
+        'Tile/S_IO/S_IO_ConfigMem.v'
     ]
 
     verilog_files_lut4ab = verilog_files + [
@@ -247,6 +266,8 @@ def main():
     harden_tile('Tile/', 'LUT4AB',        verilog_files_lut4ab,        common.TILE_WIDTH, common.TILE_HEIGHT)
     harden_tile('Tile/', 'N_term_single', verilog_files_n_term_single, common.TILE_WIDTH, common.TILE_HEIGHT//2)
     harden_tile('Tile/', 'S_term_single', verilog_files_s_term_single, common.TILE_WIDTH, common.TILE_HEIGHT//2)
+    harden_tile('Tile/', 'N_IO', verilog_files_n_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
+    harden_tile('Tile/', 'S_IO', verilog_files_s_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
     
     elapsed_time_process = time.process_time() - t_process
     elapsed_time_perf_counter = time.perf_counter() - t_perf_counter

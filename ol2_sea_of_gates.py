@@ -6,6 +6,7 @@
 import os
 import sys
 import time
+import json
 import argparse
 import resource
 
@@ -108,6 +109,15 @@ def main(tiles_path, fabric_name, output_dir):
     if OPEN_IN_KLAYOUT or OPEN_IN_OPENROAD:
         return # skip writing measurements
     
+    # Get area from metrics.json
+    file_list = sorted(os.listdir(os.path.join('runs/sea_of_gates/', fabric_name, 'runs/')))
+    output_dir = file_list[-1]
+    json_path = os.path.join('runs/sea_of_gates/', fabric_name, 'runs/', output_dir, 'final/metrics.json')
+    print(json_path)
+    assert(os.path.isfile(json_path))
+    with open(json_path, 'r') as f:
+        json_data = json.load(f)
+    
     # Write measurement data
     resources = {
         'max_memory' : {},
@@ -115,7 +125,9 @@ def main(tiles_path, fabric_name, output_dir):
         'system_time' : {},
         
         'elapsed_time_process' : elapsed_time_process,
-        'elapsed_time_perf_counter' : elapsed_time_perf_counter
+        'elapsed_time_perf_counter' : elapsed_time_perf_counter,
+        
+        'design__die__bbox' : json_data['design__die__bbox']
     }
         
     resources['max_memory']['RUSAGE_SELF'] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss

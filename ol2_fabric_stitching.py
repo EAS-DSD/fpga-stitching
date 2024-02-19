@@ -112,7 +112,7 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     # TODO PDN connections?
     
     # Create macro configurations
-    macro_names = ['LUT4AB', 'E_IO', 'W_IO', 'N_term_single', 'S_term_single']
+    macro_names = ['LUT4AB', 'E_IO', 'W_IO', 'N_IO', 'S_IO', 'N_term_single', 'S_term_single']
     macros = {}
     
     for macro_name in macro_names:
@@ -244,6 +244,15 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     
     if OPEN_IN_KLAYOUT or OPEN_IN_OPENROAD:
         return # skip writing measurements
+
+    # Get area from metrics.json
+    file_list = sorted(os.listdir(os.path.join('runs/fabric_stitching/', fabric_name, 'runs/')))
+    output_dir = file_list[-1]
+    json_path = os.path.join('runs/fabric_stitching/', fabric_name, 'runs/', output_dir, 'final/metrics.json')
+    print(json_path)
+    assert(os.path.isfile(json_path))
+    with open(json_path, 'r') as f:
+        json_data = json.load(f)
     
     # Write measurement data
     resources = {
@@ -252,7 +261,9 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         'system_time' : {},
         
         'elapsed_time_process' : elapsed_time_process,
-        'elapsed_time_perf_counter' : elapsed_time_perf_counter
+        'elapsed_time_perf_counter' : elapsed_time_perf_counter,
+        
+        'design__die__bbox' : json_data['design__die__bbox']
     }
     
     resources['max_memory']['RUSAGE_SELF'] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss

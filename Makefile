@@ -41,8 +41,7 @@ stitch_fabric_large:
 	python3 ol2_fabric_stitching.py "Tile" "fabric_large" "fabrics_nl" 15 15
 .PHONY: stitch_fabric_large
 
-
-clean:
+clean_openlane:
 	rm -f abc.history
 	rm -rf openlane_run/
 	rm -rf runs/
@@ -61,8 +60,46 @@ clean:
 	rm -f Tile/S_term_single/abc.history
 	rm -rf Tile/S_term_single/openlane_run/
 	rm -rf Tile/S_term_single/runs/
+.PHONY: clean_openlane
 
-.PHONY: clean
+clean_fabrics:
+	rm -f fabrics_nl/*
+	rm -f Tile/N_IO/N_IO.v
+	rm -f Tile/N_IO/N_IO_ConfigMem.csv
+	rm -f Tile/N_IO/N_IO_ConfigMem.v
+	rm -f Tile/N_IO/N_IO_switch_matrix.csv
+	rm -f Tile/N_IO/N_IO_switch_matrix.v
+	rm -f Tile/E_IO/E_IO.v
+	rm -f Tile/E_IO/E_IO_ConfigMem.csv
+	rm -f Tile/E_IO/E_IO_ConfigMem.v
+	rm -f Tile/E_IO/E_IO_switch_matrix.csv
+	rm -f Tile/E_IO/E_IO_switch_matrix.v
+	rm -f Tile/S_IO/S_IO.v
+	rm -f Tile/S_IO/S_IO_ConfigMem.csv
+	rm -f Tile/S_IO/S_IO_ConfigMem.v
+	rm -f Tile/S_IO/S_IO_switch_matrix.csv
+	rm -f Tile/S_IO/S_IO_switch_matrix.v
+	rm -f Tile/W_IO/W_IO.v
+	rm -f Tile/W_IO/W_IO_ConfigMem.csv
+	rm -f Tile/W_IO/W_IO_ConfigMem.v
+	rm -f Tile/W_IO/W_IO_switch_matrix.csv
+	rm -f Tile/W_IO/W_IO_switch_matrix.v
+	rm -f Tile/N_term_single/N_term_single.v
+	rm -f Tile/N_term_single/N_term_single_ConfigMem.csv
+	rm -f Tile/N_term_single/N_term_single_ConfigMem.v
+	rm -f Tile/N_term_single/N_term_single_switch_matrix.csv
+	rm -f Tile/N_term_single/N_term_single_switch_matrix.v
+	rm -f Tile/S_term_single/S_term_single.v
+	rm -f Tile/S_term_single/S_term_single_ConfigMem.csv
+	rm -f Tile/S_term_single/S_term_single_ConfigMem.v
+	rm -f Tile/S_term_single/S_term_single_switch_matrix.csv
+	rm -f Tile/S_term_single/S_term_single_switch_matrix.v
+	rm -f Tile/LUT4AB/LUT4AB.v
+	rm -f Tile/LUT4AB/LUT4AB_ConfigMem.csv
+	rm -f Tile/LUT4AB/LUT4AB_ConfigMem.v
+	rm -f Tile/LUT4AB/LUT4AB_switch_matrix.csv
+	rm -f Tile/LUT4AB/LUT4AB_switch_matrix.v
+.PHONY: clean_fabrics
 
 clean_macros:
 	rm -rf Tile/E_IO/macro/
@@ -70,5 +107,7 @@ clean_macros:
 	rm -rf Tile/LUT4AB/macro/
 	rm -rf Tile/N_term_single/macro/
 	rm -rf Tile/S_term_single/macro/
-	
 .PHONY: clean_macros
+
+clean: clean_openlane clean_fabrics clean_macros
+.PHONY: clean

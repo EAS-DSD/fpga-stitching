@@ -3,8 +3,8 @@
 import os
 import sys
 
-os.environ["FAB_ROOT"] = '/home/leo/Repositories/FABulous'
-sys.path.append('/home/leo/Repositories/FABulous')
+os.environ["FAB_ROOT"] = '/home/leo/Projects/FABulous'
+sys.path.append('/home/leo/Projects/FABulous')
 
 from FABulous import *
 
@@ -31,9 +31,7 @@ def do_gen_tile(fabricGen, projectDir, args):
 
 
 def gen_fabric(csv_file, output_file, tile_path):
-    print('a')
     my_fabric = FABulous(VerilogWriter(), csv_file)
-    print('b')
 
     # TODO Should this not check that the tiles are available in Tile/ ?
     #tileByPath = [f.name for f in os.scandir(f"{projectDir}/Tile/") if f.is_dir()]
