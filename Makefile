@@ -30,7 +30,7 @@ stitch_fabrics: stitch_fabric_small stitch_fabric_medium stitch_fabric_large
 .PHONY: stitch_fabrics
 
 stitch_fabric_small:
-	python3 ol2_fabric_stitching.py "Tile" "fabric_small" "fabrics_nl" 2 2
+	python3 ol2_fabric_stitching.py "Tile" "fabric_small" "fabrics_nl" 1 1
 .PHONY: stitch_fabric_small
 
 stitch_fabric_medium:
@@ -38,7 +38,7 @@ stitch_fabric_medium:
 .PHONY: stitch_fabric_medium
 
 stitch_fabric_large:
-	python3 ol2_fabric_stitching.py "Tile" "fabric_large" "fabrics_nl" 15 15
+	python3 ol2_fabric_stitching.py "Tile" "fabric_large" "fabrics_nl" 10 10
 .PHONY: stitch_fabric_large
 
 clean_openlane:
