@@ -40,7 +40,6 @@ class TopFlow(SequentialFlow):
         Checker.YosysSynthChecks,
         OpenROAD.CheckSDCFiles,
         OpenROAD.Floorplan,
-        #Odb.ApplyDEFTemplate,
         Odb.SetPowerConnections,
         Odb.ManualMacroPlacement,
         OpenROAD.IOPlacement,
@@ -50,7 +49,6 @@ class TopFlow(SequentialFlow):
         Odb.RemovePDNObstructions,
         Checker.PowerGridViolations,
         OpenROAD.DetailedPlacement,
-        #CustomRoute,
         OpenROAD.GlobalRouting,
         OpenROAD.DetailedRouting,
         Checker.TrDRC,
@@ -110,12 +108,17 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         'Checker.LVS'
     ]
     
+    print(TopFlow.Steps)
+    
     if NO_CHECKS:
-        for step in TopFlow.Steps:
+        for step in list(TopFlow.Steps):
+            print(step.id)
             for omit_step in omit_steps:
                 if step.id.startswith(omit_step):
                     TopFlow.Steps.remove(step)
                     break
+
+    print(TopFlow.Steps)
 
     verilog_files = [
         fabric_path
@@ -289,7 +292,7 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     os.makedirs(f'measurements/fabric_stitching/{fabric_name}', exist_ok=True)
     
     with open(os.path.join(f'measurements/fabric_stitching/{fabric_name}', f'{date_tag}.txt'), 'w') as f:
-        f.write(str(resources))
+        json.dump(resources, f)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

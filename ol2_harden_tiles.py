@@ -6,6 +6,7 @@
 import os
 import sys
 import time
+import json
 import shutil
 import resource
 from datetime import datetime
@@ -305,7 +306,7 @@ def main():
     os.makedirs(os.path.join('measurements/harden_tiles/'), exist_ok=True)
 
     with open(os.path.join('measurements/harden_tiles/', f'{date_tag}.txt'), 'w') as f:
-        f.write(str(resources))
+        json.dump(resources, f)
 
 if __name__ == "__main__":
     main()

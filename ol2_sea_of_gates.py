@@ -63,7 +63,7 @@ def main(tiles_path, fabric_name, output_dir):
     ]
     
     if NO_CHECKS:
-        for step in Classic.Steps:
+        for step in list(Classic.Steps):
             for omit_step in omit_steps:
                 if step.id.startswith(omit_step):
                     Classic.Steps.remove(step)
@@ -93,14 +93,23 @@ def main(tiles_path, fabric_name, output_dir):
     ]
 
     flow_cfg = {
+        # Main design properties
         "DESIGN_NAME": "eFPGA",
+        
+        # Sources
         "VERILOG_FILES": verilog_files,
         "RUN_LINTER": False,
-        "CLOCK_PORT": "",#"UserCLK",
-        "CLOCK_PERIOD": 0,#10,
-        "MAX_FANOUT_CONSTRAINT": 6,
+
+        # CTS
+        "CLOCK_PORT": "UserCLK",
+        "CLOCK_PERIOD": 100,
+
+        # Floorplanning
         "FP_CORE_UTIL": 40,
         "PL_TARGET_DENSITY_PCT": 50,
+
+        # Routing
+        "MAX_FANOUT_CONSTRAINT": 6,
     }
 
     os.makedirs(os.path.join('runs/sea_of_gates/', fabric_name), exist_ok=True)
@@ -167,7 +176,7 @@ def main(tiles_path, fabric_name, output_dir):
     os.makedirs(f'measurements/sea_of_gates/{fabric_name}', exist_ok=True)
     
     with open(os.path.join(f'measurements/sea_of_gates/{fabric_name}', f'{date_tag}.txt'), 'w') as f:
-        f.write(str(resources))
+        json.dump(resources, f)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
