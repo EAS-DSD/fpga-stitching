@@ -11,7 +11,7 @@ import argparse
 import resource
 from datetime import datetime
 
-from common import TILE_WIDTH, TILE_HEIGHT, SPACING, HALO_SPACING
+from common import TILE_WIDTH, TILE_HEIGHT, SPACING, HALO_SPACING, FP_PDN_VPITCH, FP_PDN_HPITCH
 
 from typing import List, Type
 
@@ -107,8 +107,6 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         'Netgen.LVS',
         'Checker.LVS'
     ]
-    
-    print(TopFlow.Steps)
     
     if NO_CHECKS:
         for step in list(TopFlow.Steps):
@@ -215,12 +213,15 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         # Power Distribution Network
         "FP_PDN_MULTILAYER" : True,
         "FP_PDN_ENABLE_RAILS" : False,
-        "FP_PDN_VOFFSET" : 10,
-        "FP_PDN_HOFFSET" : 10,
-        "FP_PDN_VSPACING" : 15,
-        "FP_PDN_HSPACING" : 15,
-        "FP_PDN_VPITCH" : 50,
-        "FP_PDN_HPITCH" : 50,
+        "FP_PDN_VOFFSET" : HALO_SPACING % FP_PDN_VPITCH,
+        "FP_PDN_HOFFSET" : HALO_SPACING % FP_PDN_HPITCH,
+        "FP_PDN_VWIDTH" : 1.2,
+        "FP_PDN_HWIDTH" : 1.6,
+        "FP_PDN_VSPACING" : 3.8,
+        "FP_PDN_HSPACING" : 3.4,
+        "FP_PDN_VPITCH" : FP_PDN_VPITCH,
+        "FP_PDN_HPITCH" : FP_PDN_HPITCH,
+        #"FP_PDN_SKIPTRIM" : True,
         
         # Routing
         "GRT_ALLOW_CONGESTION"  : True,
