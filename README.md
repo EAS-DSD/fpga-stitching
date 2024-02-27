@@ -1,4 +1,24 @@
-# FABulous and OpenLane 2
+# FPGA Fabric Stitching with FABulous and OpenLane 2
+
+## Introduction
+
+This repository contains scripts to generate various homogeneous FPGA fabrics using FABulous and harden them via OpenLane 2.
+
+Two approaches are possible:
+
+- Sea of Gates
+
+| 1x1 CLB  | 5x5 CLB  | 10x10 CLB  |
+|---|---|---|
+| ![1x1 CLB](images/1x1_sog.png)  | ![5x5 CLB](images/5x5_sog.png)  | ![10x10 CLB](images/10x10_sog.png)  |
+
+- Fabric Stitching
+
+| 1x1 CLB  | 5x5 CLB  | 10x10 CLB  |
+|---|---|---|
+| ![1x1 CLB](images/1x1_stitch.png)  | ![5x5 CLB](images/5x5_stitch.png)  | ![10x10 CLB](images/10x10_stitch.png)  |
+
+The fabric stitching process utilizes OpenLane 2's Python API.
 
 ## Prerequisites
 
@@ -7,6 +27,10 @@
 Clone the FABulous repository using:
 
 	git clone https://github.com/FPGA-Research-Manchester/FABulous
+
+Note: FABulous is currently heavily in development and while changes to FABulous during this work where upstreamed, these changes are in the development branch of FABulous.
+
+TODO
 
 Commit: `84edbe54954fa7d0fde93d727626acc0d0a60727`
 
@@ -23,6 +47,8 @@ Commit: `aef54ecd99f158610a1ce95534f7d9365e48914e`
 Install and setup Nix as explained in the [documentation](https://openlane2.readthedocs.io/en/latest/getting_started/common/nix_installation/index.html).
 
 Whenever you need to use OpenLane 2, first invoke `nix-shell` from within the OpenLane 2 repository.
+
+**Note:** To disable `LVS` and `DRC` set `NO_CHECKS=1`. To open a hardened design in KLayout or OpenROAD set `OPEN_IN_KLAYOUT=1` or `OPEN_IN_OPENROAD=1`.
 
 ## Build the Fabrics
 
@@ -52,7 +78,23 @@ After the tiles are hardened as macros, call:
 
 	make stitch_fabrics
 
-## Cleanup
+# Generate and Run a Batch of Fabrics
+
+To create various sizes of fabrics, run:
+
+	./generate_batch.py
+
+To stitch them together to a final design, run:
+
+	./run_batch.py
+
+# Create Diagrams of Measurements
+
+To create diagrams with `matplotlib`, run:
+
+	./create_diagrams.py
+
+# Cleanup
 
 To remove all intermediate files:
 
