@@ -128,6 +128,32 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
     OPEN_IN_OPENROAD  = os.getenv('OPEN_IN_OPENROAD')
     NO_CHECKS         = os.getenv('NO_CHECKS')
 
+    omit_steps = [
+        'OpenROAD.STAPrePNR',
+        'OpenROAD.STAMidPNR',
+        'OpenROAD.STAMidPNR-1',
+        'OpenROAD.STAMidPNR-2',
+        'OpenROAD.STAMidPNR-3',
+        'OpenROAD.STAPostPNR',
+        'KLayout.XOR',
+        'Checker.XOR',
+        'Magic.DRC',
+        'KLayout.DRC',
+        'Checker.MagicDRC',
+        'Checker.KLayoutDRC',
+        'Magic.SpiceExtraction',
+        'Checker.IllegalOverlap',
+        'Netgen.LVS',
+        'Checker.LVS'
+    ]
+    
+    if NO_CHECKS:
+        for step in list(TileFlow.Steps):
+            for omit_step in omit_steps:
+                if step.id.startswith(omit_step):
+                    TileFlow.Steps.remove(step)
+                    break
+
     flow_cfg = {
         # Main design properties
         "DESIGN_NAME"    : design_name,
@@ -143,13 +169,19 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
         # Floorplanning
         "DIE_AREA"           : [0, 0, width, height],
         "FP_SIZING"          : "absolute",
+        "PL_TARGET_DENSITY_PCT" : 50.0,
         
         # Power Distribution Network
+        "FP_PDN_CFG" : 'pdn/pdn_cfg.tcl',
         "FP_PDN_MULTILAYER" : False,
-        "FP_PDN_VOFFSET" : 10,
-        "FP_PDN_HOFFSET" : 10,
-        "FP_PDN_VSPACING" : 50,
-        "FP_PDN_HSPACING" : 50,
+        "FP_PDN_VOFFSET" : 0,
+        "FP_PDN_HOFFSET" : 0,
+        "FP_PDN_VWIDTH" : 1.2,
+        "FP_PDN_HWIDTH" : 1.6,
+        "FP_PDN_VSPACING" : 3.8,
+        "FP_PDN_HSPACING" : 3.4,
+        "FP_PDN_VPITCH" : common.FP_PDN_VPITCH,
+        "FP_PDN_HPITCH" : common.FP_PDN_HPITCH,
 
         # Routing
         "GRT_ALLOW_CONGESTION" : True,
