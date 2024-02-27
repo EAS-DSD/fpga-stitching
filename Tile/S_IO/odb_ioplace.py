@@ -17,8 +17,8 @@ def io_place(reader):
 
     # Find die & layers
     die_area = reader.block.getDieArea()
-    layer_fabric = reader.tech.findLayer("met4")
-    layer_config = reader.tech.findLayer("met3")
+    layer_fabric = reader.tech.findLayer("met3")
+    layer_config = reader.tech.findLayer("met2")
 
     pins_io = [
         'A_I_top', 'A_O_top', 'A_T_top', 'B_I_top', 'B_O_top', 'B_T_top'

@@ -17,12 +17,8 @@ def io_place(reader):
 
     # Find die & layers
     die_area = reader.block.getDieArea()
-    layer_fabric = reader.tech.findLayer("met4")
-    layer_config = reader.tech.findLayer("met3")
-    
-    # Note: all begins all correct, all ends are opposite
-    
-    print([f'N1BEG[{bit}]' for bit in range(4)])
+    layer_fabric = reader.tech.findLayer("met3")
+    layer_config = reader.tech.findLayer("met2")
     
     pins_fabric_north = list(itertools.chain(
         [
