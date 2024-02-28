@@ -24,15 +24,11 @@ The fabric stitching process utilizes OpenLane 2's Python API.
 
 ### FABulous
 
-Clone the FABulous repository using:
+Clone our FABulous fork using:
 
-	git clone https://github.com/FPGA-Research-Manchester/FABulous
+	git clone https://github.com/EAS-DSD/FABulous
 
-Note: FABulous is currently heavily in development and while changes to FABulous during this work where upstreamed, these changes are in the development branch of FABulous.
-
-TODO
-
-Commit: `84edbe54954fa7d0fde93d727626acc0d0a60727`
+Note: FABulous is currently heavily under development, and although the changes to FABulous have been upstreamed during this work, these changes are in the development branch of FABulous. Thus we created our fork with the necessary changes.
 
 Setup a virtual environment in Python and install the required packages as described in the `README`.
 
@@ -47,6 +43,8 @@ Commit: `aef54ecd99f158610a1ce95534f7d9365e48914e`
 Install and setup Nix as explained in the [documentation](https://openlane2.readthedocs.io/en/latest/getting_started/common/nix_installation/index.html).
 
 Whenever you need to use OpenLane 2, first invoke `nix-shell` from within the OpenLane 2 repository.
+
+# Harden the Fabrics
 
 **Note:** To disable `LVS` and `DRC` set `NO_CHECKS=1`. To open a hardened design in KLayout or OpenROAD set `OPEN_IN_KLAYOUT=1` or `OPEN_IN_OPENROAD=1`.
 
@@ -66,7 +64,7 @@ Now inside this repository, call:
 
 	make sea_of_gates_fabrics
 
-## 2. Fabric Stitching with Custom Placement and Custom Routing TODO
+## 2. Fabric Stitching with Custom Placement
 
 Invoke the `nix-shell` from within the OpenLane 2 repo.
 
