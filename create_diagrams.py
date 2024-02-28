@@ -107,12 +107,10 @@ def bar_chart_time(samples=3):
     # Make the plot
     plt.bar(br1, data_sea_of_gates, color=colors[0], width=barWidth,
             edgecolor='black', label='Sea of Gates', yerr=(error_sea_of_gates_low, error_sea_of_gates_high))
-
     plt.bar(br2, data_harden_tiles, color=colors[1], width=barWidth,
             edgecolor='black', label='Tiles Hardening', yerr=(error_harden_tiles_low, error_harden_tiles_high))
-
     plt.bar(br2, data_fabric_stitching, color=colors[2], width=barWidth,
-            edgecolor='black', label='Fabric Stitching', yerr=(error_harden_tiles_low, error_harden_tiles_high), bottom=data_harden_tiles) 
+            edgecolor='black', label='Fabric Stitching', yerr=(error_harden_tiles_low, error_harden_tiles_high), bottom=data_harden_tiles)
 
     # inset axes....
     x1, x2, y1, y2 = -barWidth, barWidth*6, 0, 25  # subregion of the original image
@@ -122,6 +120,8 @@ def bar_chart_time(samples=3):
             edgecolor='black', label='Sea of Gates', yerr=(error_sea_of_gates_low, error_sea_of_gates_high))
     axins.bar(br2, data_harden_tiles, color=colors[1], width=barWidth,
             edgecolor='black', label='Tiles Hardening', yerr=(error_harden_tiles_low, error_harden_tiles_high))
+    axins.bar(br2, data_fabric_stitching, color=colors[2], width=barWidth,
+            edgecolor='black', label='Fabric Stitching', yerr=(error_harden_tiles_low, error_harden_tiles_high), bottom=data_harden_tiles)
 
     ax.indicate_inset_zoom(axins, edgecolor="black")
 
