@@ -41,11 +41,29 @@ stitch_fabric_large:
 	python3 ol2_fabric_stitching.py "Tile" "fabric_large" "fabrics_nl" 10 10
 .PHONY: stitch_fabric_large
 
-measurements:
+measurements_harden_tiles:
 	for number in 1 2 3 4 5 ; do \
 		NO_CHECKS=1 make harden_tiles ; \
 	done
-.PHONY: measurements
+.PHONY: measurements_harden_tiles
+
+measurements_sea_of_gates_fabrics:
+	for number in 1 2 3 4 5 ; do \
+		NO_CHECKS=1 make sea_of_gates_fabrics ; \
+	done
+.PHONY: measurements_sea_of_gates_fabrics
+
+measurements_stitch_fabrics:
+	for number in 1 2 3 4 5 ; do \
+		NO_CHECKS=1 make stitch_fabrics ; \
+	done
+.PHONY: measurements_stitch_fabrics
+
+measurements_batch:
+	for number in 1 2 3 4 5 ; do \
+		NO_CHECKS=1 ./run_batch.py ; \
+	done
+.PHONY: measurements_batch
 
 clean_openlane:
 	rm -f abc.history
