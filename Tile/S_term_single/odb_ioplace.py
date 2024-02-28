@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+# Copyright (c) 2024 Leo Moser <leomoser99@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
+
 import os
 import sys
 import click
@@ -6,7 +11,7 @@ import itertools
 from reader import click_odb, click
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from odb_helper import place_pin, place_pins_central
+from odb_helper import place_pins_central
 
 @click.command()
 @click_odb

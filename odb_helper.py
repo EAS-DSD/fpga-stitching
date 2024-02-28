@@ -11,9 +11,10 @@ import click
 from reader import click_odb, click
 import odb
 
-
+# Place pins centrally, equally spaced on one side
 def place_pins_central(die_area, layer, bterms, side='N', margin=10_000, min_grid=5):
 
+    # Nothing to do
     if not len(bterms):
         return
 
@@ -25,7 +26,7 @@ def place_pins_central(die_area, layer, bterms, side='N', margin=10_000, min_gri
     die_width = die_x2 - die_x1
     die_height = die_y2 - die_y1
     
-    # Rectangle graphic
+    # Size of pin rectangle
     PIN_WIDTH  = 300
     PIN_LENGTH = 1000
     
@@ -117,56 +118,3 @@ def place_pins_central(die_area, layer, bterms, side='N', margin=10_000, min_gri
 
         # Add to OpenDB
         odb.dbBox_create(bpin, layer, *rect.ll(), *rect.ur())
-
-def place_pin(die_area, layer, bterm, pos, side='N', flip_side=False):
-
-    # Get limits
-    BLOCK_LL_X = die_area.xMin()
-    BLOCK_LL_Y = die_area.yMin()
-    BLOCK_UR_X = die_area.xMax()
-    BLOCK_UR_Y = die_area.yMax()
-
-    # Create pin
-    bpin = odb.dbBPin_create(bterm)
-    bpin.setPlacementStatus("PLACED")
-    
-    # Rectangle graphic
-    PIN_WIDTH  = 300
-    PIN_LENGTH = 1000
-    
-    macro_width = BLOCK_UR_X - BLOCK_LL_X
-    macro_height = BLOCK_UR_Y - BLOCK_LL_Y
-
-    if side == 'N':
-        rect = odb.Rect(0, 0, PIN_WIDTH, PIN_LENGTH)
-        if flip_side == False:
-            rect.moveTo(macro_width - pos + PIN_WIDTH // 2, BLOCK_UR_Y - PIN_LENGTH)
-        if flip_side == True:
-            rect.moveTo(pos - PIN_WIDTH // 2, BLOCK_UR_Y - PIN_LENGTH)
-
-    elif side == 'S':
-        rect = odb.Rect(0, 0, PIN_WIDTH, PIN_LENGTH)
-        if flip_side == False:
-            rect.moveTo(macro_width - pos + PIN_WIDTH // 2, BLOCK_LL_Y)
-        if flip_side == True:
-            rect.moveTo(pos - PIN_WIDTH // 2, BLOCK_LL_Y)
-
-    elif side == 'W':
-        rect = odb.Rect(0, 0, PIN_LENGTH, PIN_WIDTH)
-        if flip_side == False:
-            rect.moveTo(BLOCK_LL_X, macro_height - pos + PIN_WIDTH // 2)
-        if flip_side == True:
-            rect.moveTo(BLOCK_LL_X, pos - PIN_WIDTH // 2)
-
-    elif side == 'E':
-        rect = odb.Rect(0, 0, PIN_LENGTH, PIN_WIDTH)
-        if flip_side == False:
-            rect.moveTo(BLOCK_UR_X - PIN_LENGTH, macro_height - pos + PIN_WIDTH // 2)
-        if flip_side == True:
-            rect.moveTo(BLOCK_UR_X - PIN_LENGTH, pos - PIN_WIDTH // 2)
-
-    else:
-        raise RuntimeError('Invalid pin position')
-
-    # Add to OpenDB
-    odb.dbBox_create(bpin, layer, *rect.ll(), *rect.ur())
