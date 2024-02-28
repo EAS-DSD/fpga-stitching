@@ -1,10 +1,13 @@
 runs/
 openlane_run/
 abc.history
-__pycache__
+__pycache__/
+FABulous/
 output/
 macro/
 fabrics_nl/
+configs/fabric*x*.csv
+configs/fabric_custom.csv
 
 Tile/N_IO/N_IO.v
 Tile/E_IO/E_IO.v

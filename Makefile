@@ -41,13 +41,25 @@ stitch_fabric_large:
 	python3 ol2_fabric_stitching.py "Tile" "fabric_large" "fabrics_nl" 10 10
 .PHONY: stitch_fabric_large
 
+measurements:
+	for number in 1 2 3 4 5 ; do \
+		NO_CHECKS=1 make harden_tiles ; \
+	done
+.PHONY: measurements
+
 clean_openlane:
 	rm -f abc.history
 	rm -rf openlane_run/
 	rm -rf runs/
+	rm -f Tile/N_IO/abc.history
+	rm -rf Tile/N_IO/openlane_run/
+	rm -rf Tile/N_IO/runs/
 	rm -f Tile/E_IO/abc.history
 	rm -rf Tile/E_IO/openlane_run/
 	rm -rf Tile/E_IO/runs/
+	rm -f Tile/S_IO/abc.history
+	rm -rf Tile/S_IO/openlane_run/
+	rm -rf Tile/S_IO/runs/
 	rm -f Tile/W_IO/abc.history
 	rm -rf Tile/W_IO/openlane_run/
 	rm -rf Tile/W_IO/runs/
@@ -102,7 +114,9 @@ clean_fabrics:
 .PHONY: clean_fabrics
 
 clean_macros:
+	rm -rf Tile/N_IO/macro/
 	rm -rf Tile/E_IO/macro/
+	rm -rf Tile/S_IO/macro/
 	rm -rf Tile/W_IO/macro/
 	rm -rf Tile/LUT4AB/macro/
 	rm -rf Tile/N_term_single/macro/
