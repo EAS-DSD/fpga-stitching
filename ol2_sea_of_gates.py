@@ -93,7 +93,7 @@ def main(tiles_path, fabric_name, output_dir):
     ]
 
     flow_cfg = {
-        # Main design properties
+        # Name
         "DESIGN_NAME": "eFPGA",
         
         # Sources
@@ -121,7 +121,7 @@ def main(tiles_path, fabric_name, output_dir):
     if OPEN_IN_OPENROAD:
         flow_class = OpenInOpenROAD 
     
-    # Run flow
+    # Run the flow
     flow = flow_class(
         flow_cfg,
         design_dir = os.path.join('runs/sea_of_gates/', fabric_name),

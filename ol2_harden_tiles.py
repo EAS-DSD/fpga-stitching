@@ -155,7 +155,7 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
                     break
 
     flow_cfg = {
-        # Main design properties
+        # Name
         "DESIGN_NAME"    : design_name,
 
         # Sources
@@ -195,7 +195,7 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
     if OPEN_IN_OPENROAD:
         flow_class = OpenInOpenROAD 
 
-    # Run flow
+    # Run the flow
     flow = flow_class(
         flow_cfg,
         design_dir = tile_path,

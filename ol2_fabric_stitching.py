@@ -123,7 +123,7 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     ]
     
     # Create macro configurations
-    macro_names = ['LUT4AB', 'E_IO', 'W_IO', 'N_IO', 'S_IO', 'N_term_single', 'S_term_single']
+    macro_names = ['LUT4AB', 'E_IO', 'W_IO', 'N_term_single', 'S_term_single']
     macros = {}
     
     for macro_name in macro_names:
@@ -195,17 +195,19 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     #print(macros)
 
     flow_cfg = {
+        # Name
         "DESIGN_NAME": "eFPGA",
         
+        # Sources
         "VERILOG_FILES": verilog_files,
-
-        # Floorplanning
-        "DIE_AREA"           : [0, 0, FABRIC_WIDTH, FABRIC_HEIGHT],
-        "FP_SIZING"          : "absolute",
 
         # CTS
         "CLOCK_PORT": "UserCLK",
         "CLOCK_PERIOD": 100,
+
+        # Floorplanning
+        "DIE_AREA"           : [0, 0, FABRIC_WIDTH, FABRIC_HEIGHT],
+        "FP_SIZING"          : "absolute",
 
         # Macros
         "MACROS": macros,
@@ -238,7 +240,7 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
     if OPEN_IN_OPENROAD:
         flow_class = OpenInOpenROAD
 
-    # Run flow
+    # Run the flow
     flow = flow_class(
         flow_cfg,
         design_dir = os.path.join('runs/fabric_stitching/', fabric_name),
