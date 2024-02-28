@@ -224,9 +224,9 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
     shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/nl/{design_name}.nl.v'), os.path.join(tile_path, f'macro/nl/{design_name}.nl.v'))
     shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/pnl/{design_name}.pnl.v'), os.path.join(tile_path, f'macro/pnl/{design_name}.pnl.v'))
     
-    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/max_/{design_name}.max.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.max.spef'))
-    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/min_/{design_name}.min.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.min.spef'))
-    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/nom_/{design_name}.nom.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.nom.spef'))
+    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/max/{design_name}.max.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.max.spef'))
+    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/min/{design_name}.min.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.min.spef'))
+    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/nom/{design_name}.nom.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.nom.spef'))
 
 def main():
 

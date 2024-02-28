@@ -28,6 +28,8 @@ Clone our FABulous fork using:
 
 	git clone https://github.com/EAS-DSD/FABulous
 
+It must be located in the root directory of this repository.
+
 Note: FABulous is currently heavily under development, and although the changes to FABulous have been upstreamed during this work, these changes are in the development branch of FABulous. Thus we created our fork with the necessary changes.
 
 Setup a virtual environment in Python and install the required packages as described in the `README`.

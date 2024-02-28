@@ -3,8 +3,8 @@
 import os
 import sys
 
-os.environ["FAB_ROOT"] = '/home/leo/Projects/FABulous'
-sys.path.append('/home/leo/Projects/FABulous')
+os.environ["FAB_ROOT"] = './FABulous'
+sys.path.append('./FABulous')
 
 from FABulous import *
 
