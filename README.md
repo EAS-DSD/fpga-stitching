@@ -1,4 +1,4 @@
-# FPGA Stitching with FABulous and OpenLane 2
+# Stitching FPGA Fabrics with FABulous and OpenLane 2
 
 ## Introduction
 
