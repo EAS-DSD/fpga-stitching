@@ -228,7 +228,8 @@ def main(tiles_path, fabric_name, output_dir, FABRIC_NUM_TILES_X=2, FABRIC_NUM_T
         # Routing
         "GRT_ALLOW_CONGESTION"  : True,
         "GRT_REPAIR_ANTENNAS"   : False,
-        "RT_MAX_LAYER"          : "met4"
+        "RT_MAX_LAYER"          : "met4",
+        "DRT_THREADS": 16
     }
 
     os.makedirs(os.path.join('runs/fabric_stitching/', fabric_name), exist_ok=True)

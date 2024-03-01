@@ -186,6 +186,7 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
         # Routing
         "GRT_ALLOW_CONGESTION" : True,
         "RT_MAX_LAYER"         : "met4",
+        "DRT_THREADS": 16
     }
 
     # Choose which flow to run
@@ -224,9 +225,9 @@ def harden_tile(tiles_path, tile_name, verilog_files, width, height):
     shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/nl/{design_name}.nl.v'), os.path.join(tile_path, f'macro/nl/{design_name}.nl.v'))
     shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/pnl/{design_name}.pnl.v'), os.path.join(tile_path, f'macro/pnl/{design_name}.pnl.v'))
     
-    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/max/{design_name}.max.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.max.spef'))
-    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/min/{design_name}.min.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.min.spef'))
-    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/nom/{design_name}.nom.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.nom.spef'))
+    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/max_/{design_name}.max.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.max.spef'))
+    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/min_/{design_name}.min.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.min.spef'))
+    shutil.copy(os.path.join(tile_path, 'runs', output_dir, f'final/spef/nom_/{design_name}.nom.spef'), os.path.join(tile_path, f'macro/spef/{design_name}.nom.spef'))
 
 def main():
 
@@ -297,13 +298,13 @@ def main():
     ]
 
     # Harden each tile
-    harden_tile('Tile/', 'E_IO',          verilog_files_e_io,          common.TILE_WIDTH//2, common.TILE_HEIGHT)
-    harden_tile('Tile/', 'W_IO',          verilog_files_w_io,          common.TILE_WIDTH//2, common.TILE_HEIGHT)
+    harden_tile('Tile/', 'E_IO',          verilog_files_e_io,          common.TILE_WIDTH/2, common.TILE_HEIGHT)
+    harden_tile('Tile/', 'W_IO',          verilog_files_w_io,          common.TILE_WIDTH/2, common.TILE_HEIGHT)
     harden_tile('Tile/', 'LUT4AB',        verilog_files_lut4ab,        common.TILE_WIDTH, common.TILE_HEIGHT)
-    harden_tile('Tile/', 'N_term_single', verilog_files_n_term_single, common.TILE_WIDTH, common.TILE_HEIGHT//2)
-    harden_tile('Tile/', 'S_term_single', verilog_files_s_term_single, common.TILE_WIDTH, common.TILE_HEIGHT//2)
-    #harden_tile('Tile/', 'N_IO', verilog_files_n_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
-    #harden_tile('Tile/', 'S_IO', verilog_files_s_io, common.TILE_WIDTH, common.TILE_HEIGHT//2)
+    harden_tile('Tile/', 'N_term_single', verilog_files_n_term_single, common.TILE_WIDTH, common.TILE_HEIGHT/2)
+    harden_tile('Tile/', 'S_term_single', verilog_files_s_term_single, common.TILE_WIDTH, common.TILE_HEIGHT/2)
+    #harden_tile('Tile/', 'N_IO', verilog_files_n_io, common.TILE_WIDTH, common.TILE_HEIGHT/2)
+    #harden_tile('Tile/', 'S_IO', verilog_files_s_io, common.TILE_WIDTH, common.TILE_HEIGHT/2)
     
     elapsed_time_process = time.process_time() - t_process
     elapsed_time_perf_counter = time.perf_counter() - t_perf_counter

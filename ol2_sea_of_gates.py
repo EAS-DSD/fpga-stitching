@@ -110,6 +110,7 @@ def main(tiles_path, fabric_name, output_dir):
 
         # Routing
         "MAX_FANOUT_CONSTRAINT": 6,
+        "DRT_THREADS": 16
     }
 
     os.makedirs(os.path.join('runs/sea_of_gates/', fabric_name), exist_ok=True)
