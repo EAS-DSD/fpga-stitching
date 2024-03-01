@@ -14,7 +14,7 @@ sea_of_gates_measurements = {'fabric_small' : [], 'fabric_medium' : [], 'fabric_
 fabric_stitching_measurements = {'fabric_small' : [], 'fabric_medium' : [], 'fabric_large' : []}
 harden_tiles_measurements = []
 
-colors = ['#22d2f7', '#e3607a', '#14d301']
+colors = ['#78e1f7', '#e3607a', '#10aa01']
 
 def load_measurements():
 
@@ -106,22 +106,22 @@ def bar_chart_time(samples=3):
 
     # Make the plot
     plt.bar(br1, data_sea_of_gates, color=colors[0], width=barWidth,
-            edgecolor='black', label='Sea of Gates', yerr=(error_sea_of_gates_low, error_sea_of_gates_high))
+            edgecolor='black', label='Sea of Gates')#, yerr=(error_sea_of_gates_low, error_sea_of_gates_high))
     plt.bar(br2, data_harden_tiles, color=colors[1], width=barWidth,
-            edgecolor='black', label='Tiles Hardening', yerr=(error_harden_tiles_low, error_harden_tiles_high))
+            edgecolor='black', label='Tiles Hardening')#, yerr=(error_harden_tiles_low, error_harden_tiles_high))
     plt.bar(br2, data_fabric_stitching, color=colors[2], width=barWidth,
-            edgecolor='black', label='Fabric Stitching', yerr=(error_harden_tiles_low, error_harden_tiles_high), bottom=data_harden_tiles)
+            edgecolor='black', label='Fabric Stitching', bottom=data_harden_tiles)#, yerr=(error_harden_tiles_low, error_harden_tiles_high))
 
     # inset axes....
-    x1, x2, y1, y2 = -barWidth, barWidth*6, 0, 25  # subregion of the original image
-    axins = ax.inset_axes([0.15, 0.2, 0.4, 0.4], xlim=(x1, x2), ylim=(y1, y2), xticklabels=[])
+    x1, x2, y1, y2 = -barWidth, barWidth*6, 0, 20  # subregion of the original image
+    axins = ax.inset_axes([0.15, 0.225, 0.4, 0.4], xlim=(x1, x2), ylim=(y1, y2), xticklabels=[])
 
     axins.bar(br1, data_sea_of_gates, color=colors[0], width=barWidth,
-            edgecolor='black', label='Sea of Gates', yerr=(error_sea_of_gates_low, error_sea_of_gates_high))
+            edgecolor='black', label='Sea of Gates')#, yerr=(error_sea_of_gates_low, error_sea_of_gates_high))
     axins.bar(br2, data_harden_tiles, color=colors[1], width=barWidth,
-            edgecolor='black', label='Tiles Hardening', yerr=(error_harden_tiles_low, error_harden_tiles_high))
+            edgecolor='black', label='Tiles Hardening')#, yerr=(error_harden_tiles_low, error_harden_tiles_high))
     axins.bar(br2, data_fabric_stitching, color=colors[2], width=barWidth,
-            edgecolor='black', label='Fabric Stitching', yerr=(error_harden_tiles_low, error_harden_tiles_high), bottom=data_harden_tiles)
+            edgecolor='black', label='Fabric Stitching', bottom=data_harden_tiles)#, yerr=(error_harden_tiles_low, error_harden_tiles_high))
 
     ax.indicate_inset_zoom(axins, edgecolor="black")
 
@@ -135,7 +135,7 @@ def bar_chart_time(samples=3):
     # Adding Xticks
     plt.ylabel('Time in Minutes')
     plt.xticks([r + barWidth/2 for r in range(len(data_sea_of_gates))], 
-            ['Small 1x1 CLB', 'Medium 5x5 CLB', 'Large 10x10 CLB'])
+            ['Small 1x1 CLBs', 'Medium 5x5 CLBs', 'Large 10x10 CLBs'])
      
     ax.legend(loc='upper left', fancybox=True)#, fontsize="10")
     
@@ -211,18 +211,18 @@ def bar_chart_ram(samples=3):
 
     # Make the plot
     ax.bar(br1, data_sea_of_gates, color = colors[0], width = barWidth, 
-            edgecolor ='black', label ='Sea of Gates', yerr = [error_sea_of_gates_low, error_sea_of_gates_high])
+            edgecolor ='black', label ='Sea of Gates')#, yerr = [error_sea_of_gates_low, error_sea_of_gates_high])
             
     ax.bar(br2, data_harden_tiles, color = colors[1], width = barWidth, 
-            edgecolor ='black', label ='Tiles Hardening', yerr = (error_harden_tiles_low, error_harden_tiles_high))
+            edgecolor ='black', label ='Tiles Hardening')#, yerr = (error_harden_tiles_low, error_harden_tiles_high))
             
     ax.bar(br3, data_fabric_stitching, color = colors[2], width = barWidth, 
-            edgecolor ='black', label ='Fabric Stitching', yerr = (error_fabric_stitching_low, error_fabric_stitching_high))
+            edgecolor ='black', label ='Fabric Stitching')#, yerr = (error_fabric_stitching_low, error_fabric_stitching_high))
 
     # Adding Xticks
     plt.ylabel('RAM Usage in GiB') 
     plt.xticks([r + barWidth for r in range(len(data_sea_of_gates))], 
-            ['Small 1x1 CLB', 'Medium 5x5 CLB', 'Large 10x10 CLB'])
+            ['Small 1x1 CLBs', 'Medium 5x5 CLBs', 'Large 10x10 CLBs'])
 
     ax.legend(loc='upper left', fancybox=True)
     
@@ -314,34 +314,34 @@ def diagram_batch(samples=3):
 
     fig, ax = plt.subplots(3, figsize=(15*0.4,7*0.7)) 
 
-    p1, = ax[0].plot(keys, data_time, color=colors[0], linestyle='dashed', marker='^', markeredgecolor='white',
+    p1, = ax[0].plot(keys, data_time, color=colors[0], linestyle='dashed', marker='o', markeredgecolor='white',
                    markerfacecolor=colors[0], markersize=8, label="Time in Minutes")
-    p2, = ax[1].plot(keys, data_ram, color=colors[1], linestyle='dashed', marker='o', markeredgecolor='white',
+    p2, = ax[1].plot(keys, data_ram, color=colors[1], linestyle='dashed', marker='^', markeredgecolor='white',
                    markerfacecolor=colors[1], markersize=8, label="RAM Usage in GiB")
     p3, = ax[2].plot(keys, data_area, color=colors[2], linestyle='dashed', marker='s', markeredgecolor='white',
                    markerfacecolor=colors[2], markersize=8, label="Die Area in mm²")
     
-    ax[0].errorbar(keys, data_time, yerr = (error_time_low, error_time_high), fmt="none", color=colors[0])
-    ax[1].errorbar(keys, data_ram, yerr = (error_ram_low, error_ram_high), fmt="none", color=colors[1])
-    ax[2].errorbar(keys, data_area, yerr = (error_area_low, error_area_high), fmt="none", color=colors[2])
+    #ax[0].errorbar(keys, data_time, yerr = (error_time_low, error_time_high), fmt="none", color="black", zorder=1)#colors[0])
+    #ax[1].errorbar(keys, data_ram, yerr = (error_ram_low, error_ram_high), fmt="none", color="black", zorder=1)#colors[1])
+    #ax[2].errorbar(keys, data_area, yerr = (error_area_low, error_area_high), fmt="none",color="black", zorder=1)#colors[2])
     
     ax[0].set(ylabel="Time in Minutes")
     ax[1].set(ylabel="RAM Usage in GiB")
-    ax[2].set(xlabel="Fabric Size in CLB", ylabel="Die Area in mm²")
+    ax[2].set(xlabel="Fabric Size in CLBs", ylabel="Die Area in mm²")
     
-    ax[0].yaxis.label.set_color(p1.get_color())
-    ax[1].yaxis.label.set_color(p2.get_color())
-    ax[2].yaxis.label.set_color(p3.get_color())
+    #ax[0].yaxis.label.set_color(p1.get_color())
+    #ax[1].yaxis.label.set_color(p2.get_color())
+    #ax[2].yaxis.label.set_color(p3.get_color())
     
-    ax[0].tick_params(axis='y', colors=p1.get_color())
-    ax[1].tick_params(axis='y', colors=p2.get_color())
-    ax[2].tick_params(axis='y', colors=p3.get_color())
+    #ax[0].tick_params(axis='y', colors=p1.get_color())
+    #ax[1].tick_params(axis='y', colors=p2.get_color())
+    #ax[2].tick_params(axis='y', colors=p3.get_color())
     
     ax[0].yaxis.set_major_locator(plticker.MultipleLocator(base=5.0))
     ax[1].yaxis.set_major_locator(plticker.MultipleLocator(base=2.0))
     ax[2].yaxis.set_major_locator(plticker.MultipleLocator(base=20.0))
     
-    ax[0].set_ylim([-2.5, 20])
+    ax[0].set_ylim([-2.5, 15])
     ax[1].set_ylim([0, 9])
     ax[2].set_ylim([-5, 65])
     
