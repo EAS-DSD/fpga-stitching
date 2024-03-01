@@ -40,7 +40,7 @@ Clone the OpenLane 2 repository using:
 
 	git clone https://github.com/efabless/openlane2
 
-Commit: `aef54ecd99f158610a1ce95534f7d9365e48914e`
+And checkout the following commit: `aef54ecd99f158610a1ce95534f7d9365e48914e`
 
 Install and setup Nix as explained in the [documentation](https://openlane2.readthedocs.io/en/latest/getting_started/common/nix_installation/index.html).
 
