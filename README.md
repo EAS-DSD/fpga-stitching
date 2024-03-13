@@ -112,3 +112,13 @@ To remove the hardened macros:
 
 	make clean_macros
 
+# Acknowledgement
+
+<p>
+  <img align="right" src="images/tugraz.png" alt="TU Graz Logo" width="14%" height="14%">
+  <img align="right" src="images/spacing.png" alt="Spacing" width="1%" height="1%">
+  <img align="right" src="images/eas.png" alt="EAS Logo" width="8%" height="8%">
+</p>
+
+
+This repository includes results of research in the [Embedded Architectures & Systems](https://iti.tugraz.at/eas) (EAS) Group at [Graz University of Technology](https://www.tugraz.at). 
