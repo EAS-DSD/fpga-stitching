@@ -122,3 +122,6 @@ To remove the hardened macros:
 
 	make clean_macros
 
+# Licensing
+
+The source code in this repository is licensed under the Apache 2.0 license.
